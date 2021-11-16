@@ -7,7 +7,7 @@ class Todo
     @completed = completed
   end
 
-  def is_due?
+  def is_due
     @due_date == Date.today
   end
 
@@ -15,7 +15,7 @@ class Todo
     @due_date < Date.today
   end
 
-  def is_duelater?
+  def is_duelater
     @due_date > Date.today
   end
 
@@ -25,10 +25,9 @@ class Todo
     else
       @flag = "   "
     end
-    if (is_due? == false)
+    if (!is_due)
       @printdate = @due_date
     end
-
     out1 = "[#{@flag}] #{@text} #{@printdate}"
     return out1
   end
@@ -48,11 +47,11 @@ class TodosList
   end
 
   def due_today
-    TodosList.new(@todos.filter { |todo| todo.is_due? })
+    TodosList.new(@todos.filter { |todo| todo.is_due })
   end
 
   def due_later
-    TodosList.new(@todos.filter { |todo| todo.is_duelater? })
+    TodosList.new(@todos.filter { |todo| todo.is_duelater })
   end
 
   def to_displayable_list
@@ -75,7 +74,6 @@ todos = todos.map { |todo|
 todos_list = TodosList.new(todos)
 
 todos_list.add(Todo.new("Service Your vehicle", date, false))
-
 puts "My Todo-list\n\n"
 
 puts "Overdue\n"
